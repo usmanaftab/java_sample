@@ -1,20 +1,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mycompany.app</groupId>
-  <artifactId>java_sample</artifactId>
-  <packaging>jar</packaging>
-  <version>my-app</version>
-  <name>java_sample</name>
-  <url>http://maven.apache.org</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.mycompany.app</groupId>
+	<artifactId>java_sample</artifactId>
+	<packaging>jar</packaging>
+	<version>my-app</version>
+	<name>java_sample</name>
+	<url>http://maven.apache.org</url>
 
-  <dependencies>
+	<build>
+		<finalName>java_sample</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.3.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>com.mycompany.app.App</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>usman</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<log4j.rootLogger>DEBUG, file, CA</log4j.rootLogger>
+				<log4j.appender.CA>org.apache.log4j.ConsoleAppender</log4j.appender.CA>
+				<log4j.appender.CA.layout>org.apache.log4j.PatternLayout</log4j.appender.CA.layout>
+				<log4j.appender.CA.layout.ConversionPattern>%-4r [%t] %-5p %c %x-%m%n</log4j.appender.CA.layout.ConversionPattern>
+				<log4j.appender.file>org.apache.log4j.RollingFileAppender</log4j.appender.file>
+				<log4j.appender.file.maxFileSize>1024KB</log4j.appender.file.maxFileSize>
+				<log4j.appender.file.maxBackupIndex>5</log4j.appender.file.maxBackupIndex>
+				<log4j.appender.file.File>./logs/java_sample.log</log4j.appender.file.File>
+				<log4j.appender.file.threshold>info</log4j.appender.file.threshold>
+				<log4j.appender.file.layout>org.apache.log4j.PatternLayout</log4j.appender.file.layout>
+				<log4j.appender.file.layout.ConversionPattern>%d{ABSOLUTE}%5p %c:%L - %m%n</log4j.appender.file.layout.ConversionPattern>
+				<name>value</name>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
