@@ -1,1 +1,4 @@
 This is just a sample java project.
+
+This project contains a basic architecture to handle different Notations and their parsings.
+Parsing for Json is build which is also not tested fully. but is is suppose to deal with all basic case scenarios.
