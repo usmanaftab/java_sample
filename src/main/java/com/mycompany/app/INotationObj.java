@@ -9,7 +9,9 @@ package com.mycompany.app;
  */
 public interface INotationObj extends DataRead {
 	
-	public INotationObj getNotationObj(String column) throws BasicException;
+	public INotationObj getINotationObj(String key) throws BasicException;
+	
+	public INotationObj getINotationObj(int index) throws BasicException;
 	
 	public boolean isArray();
 

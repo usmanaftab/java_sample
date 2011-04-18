@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.mycompany.app.BasicException;
 import com.mycompany.app.IMapperFactory;
 import com.mycompany.app.INotationObj;
 import com.mycompany.app.Utils;
@@ -17,19 +18,20 @@ import com.mycompany.app.Utils;
  */
 public class JsonMapperFactory implements IMapperFactory {
 
-	public INotationObj createNotationObject(String json) {
-		if(JsonParser.isArray(json)) {
-			return new ArrayJsonObject(json);
+	public INotationObj createNotationObject(String json) throws BasicException {
+		try {
+			JsonParser jp = new JsonParser();
+			return jp.buildTree(json);
+		} catch (InvalidJsonException e) {
+			throw new BasicException(e);
 		}
-		
-		return new SingleJsonObject(json);
 	}
 
-	public INotationObj createNotationObject(File file) throws IOException {
+	public INotationObj createNotationObject(File file) throws IOException, BasicException {
 		return createNotationObject(Utils.readFile(file).toString());
 	}
 
-	public INotationObj createNotationObject(InputStream is) {
+	public INotationObj createNotationObject(InputStream is) throws BasicException {
 		return createNotationObject(Utils.readStream(is).toString());
 	}
 

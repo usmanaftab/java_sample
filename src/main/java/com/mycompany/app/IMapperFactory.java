@@ -13,10 +13,10 @@ import java.io.InputStream;
  */
 public interface IMapperFactory {
 	
-	public INotationObj createNotationObject(String json);
+	public INotationObj createNotationObject(String json) throws BasicException;
 	
-	public INotationObj createNotationObject(File file) throws IOException;
+	public INotationObj createNotationObject(File file) throws IOException, BasicException;
 	
-	public INotationObj createNotationObject(InputStream is);
+	public INotationObj createNotationObject(InputStream is) throws BasicException;
 
 }
