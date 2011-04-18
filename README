@@ -1,1 +1,9 @@
 This is just a sample java project.
+
+This project contains a basic architecture to handle different Notations and their parsings.
+Parsing for Json is build which is also not tested fully. but is is suppose to deal with all basic case scenarios.
+
+Instructions to run the project:
+1. Install maven2.
+2. mvn clean install : should execute all test cases and run with no errors
+3. java -jar target/java_sample.jar
